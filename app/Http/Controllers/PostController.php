@@ -14,9 +14,9 @@ class PostController extends Controller
  public function ourfilestore(Request $request){
 
  $validated=$request->validate([
-   'name'=>'required ',
+   'name'=>'required',
    'description'=>'required',
-   'image'=>'nullable|jpeg,png',
+   'image' => 'nullable|mimes:jpeg,png',
 ]);  
  
 
