@@ -16,16 +16,24 @@ class PostController extends Controller
  $validated=$request->validate([
    'name'=>'required',
    'description'=>'required',
-   'image' => 'nullable|mimes:jpeg,png',
+   'image' => 'nullable|mimes:jpeg,png,jpg',
 ]);  
- 
+
+//Upload image
+$imageName=null;
+ if(isset($request->image)){
+  $imageName=time().'.'.$request->image->extension();
+   $request->image->move(public_path('images'), $imageName);
+ }
+   //Add new post
 
    $post =new Post;
    $post->name=$request->name;
    $post->description=$request->description;
-   $post->image=$request->image;
+   $post->image=$imageName;
    
    $post->save();
+
    return redirect()->route('home')->with('success','Item successfully created!');
  }
 
